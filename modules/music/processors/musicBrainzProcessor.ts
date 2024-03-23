@@ -1,4 +1,4 @@
-import { IRelease, MusicBrainzApi } from 'musicbrainz-api';
+import { MusicBrainzApi } from 'musicbrainz-api';
 import Processor from "../classes/processor.js";
 import { SongData } from "../classes/song.js";
 

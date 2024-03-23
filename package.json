@@ -4,15 +4,6 @@
   "description": "The one bot to rule them all.",
   "exports": "./dist/core/index.js",
   "type": "module",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./ob build",
-    "start": "./ob start",
-    "install": "./ob build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gurrrrrrett3/onebot.git"
@@ -22,9 +13,6 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gurrrrrrett3/onebot/issues"
-  },
-  "bin": {
-    "onebot": "./dist/cli/index.js"
   },
   "homepage": "https://github.com/gurrrrrrett3/onebot#readme",
   "mikro-orm": {
