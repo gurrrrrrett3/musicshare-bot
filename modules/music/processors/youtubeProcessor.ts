@@ -40,8 +40,9 @@ export default class YoutubeProcessor extends Processor<YoutubeSongData> {
         // music.youtube.com/watch?v=...
         // music.youtube.com/playlist?list=...
         // music.youtube.com/album?list=...
+        // ignore other query parameters
 
-        return url.match(/^(https?:\/\/)?(www\.)?(music\.)?youtu(\.be|be\.com)\/(watch\?v=|playlist\?list=|album\?list=)?[a-zA-Z0-9_-]{11}/) !== null;
+        return url.match(/^(https?:\/\/)?(www\.)?(music\.)?youtu(\.be|be\.com)\/(watch\?v=|playlist\?list=|album\?list=)?[a-zA-Z0-9_-]{11}(&\w+=\w+)*/) !== null;
     }
 
 }
