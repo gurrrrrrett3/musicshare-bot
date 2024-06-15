@@ -6,6 +6,7 @@ import MusicModule from "../index.js";
 const Command = new SlashCommandBuilder()
     .setName("lookup")
     .setDescription("Get information about a song url.")
+    .setDMPermission(true)
     .addStringOption((option) =>
         option
             .setName("url")
