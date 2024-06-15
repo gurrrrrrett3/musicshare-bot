@@ -155,7 +155,8 @@ export default class MusicModule extends Module {
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
-                    .setLabel('Play')
+                    .setLabel('Remove Embed')
+                    .setEmoji('🗑️')
                     .setStyle(ButtonStyle.Danger)
                     .setCustomId('Remove Embed')
                     .setCustomId(`${message.id}-remove`)
