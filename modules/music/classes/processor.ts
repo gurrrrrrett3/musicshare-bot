@@ -3,9 +3,11 @@ import Song from "./song.js";
 
 export default class Processor<ApplicableSongData extends Partial<Song>> extends Logger {
 
+    public readonly enabled: boolean = true;
+
     constructor(public readonly name: string) {
         super(name);
-    } 
+    }
 
     public async search(query: string, artist?: string): Promise<ApplicableSongData[]> {
         throw new Error('Not implemented');

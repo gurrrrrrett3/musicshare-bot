@@ -7,6 +7,7 @@ export type MusicBrainzSongData = SongData<never>;
 export default class MusicBrainzProcessor extends Processor<MusicBrainzSongData> {
 
     public client: MusicBrainzApi;
+    public enabled: boolean = false; // disabled until i can fix searching
 
     constructor(public baseUrl: string = 'https://musicbrainz.org') {
         super('MusicBrainz');

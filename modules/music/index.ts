@@ -190,7 +190,9 @@ export default class MusicModule extends Module {
 
         for (let processorFile of processorFiles) {
             let processorImport = await import(`${processorPath}/${processorFile}`);
-            const processor = new processorImport.default();
+            const processor = new processorImport.default() as Processor<any>;
+            if (!processor.enabled) continue;
+
             this.processors.push(processor);
 
             Logger.info(processor.name, 'Loaded processor');
