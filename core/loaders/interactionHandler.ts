@@ -41,21 +41,6 @@ export default class InteractionHandler {
     }
   }
 
-  public unregister() {
-    switch (this.type) {
-      case InteractionType.BUTTON:
-        bot.buttonManager.unregisterButton(this.id);
-        break;
-      case InteractionType.MODAL:
-        bot.modalManager.unregisterModal(this.id);
-        break;
-      case InteractionType.SELECT_MENU:
-        bot.selectMenuManager.unregisterMenu(this.id);
-        break;
-      default:
-        throw new Error(`Invalid interaction type: ${this.type}`);
-    }
-  }
 }
 
 export enum InteractionType {

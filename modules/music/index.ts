@@ -10,6 +10,7 @@ import { SpotifySongData } from "./processors/spotifyProcessor.js";
 import YoutubeProcessor, { YoutubeSongData } from "./processors/youtubeProcessor.js";
 import chalk from "chalk";
 import { ansi } from "./util/ansi.js";
+import Utils from "../../core/utils/utils.js";
 
 export default class MusicModule extends Module {
     name = "music";
@@ -126,6 +127,7 @@ export default class MusicModule extends Module {
         if (albumIcon) embed.setThumbnail(albumIcon);
 
         let description = '';
+        let providerList = Object.keys(songInfo).filter((key) => songInfo[key].url);
 
         for (const [processor, song] of Object.entries(songInfo)) {
             if (song.error || song.message) {
@@ -134,7 +136,7 @@ export default class MusicModule extends Module {
                 description += `**${processor}**: No results found\n`;
             } else {
                 if (processor === 'Youtube') {
-                    description += `[${processor}](${song.url}) ([YouTube Music](https://music.youtube.com/watch?v=${song.id}))\n`
+                    description += `[${processor}](${song.url}) ([Music](https://music.youtube.com/watch?v=${song.id}))\n`
                 } else {
                     description += `[${processor}](${song.url})\n`
                 }
@@ -156,6 +158,11 @@ export default class MusicModule extends Module {
             value: durationString,
             inline: true
         });
+
+
+        embed.setFooter({
+            text: `Data provided by ${Utils.andList(providerList)}`
+        })
 
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
@@ -231,9 +238,9 @@ export default class MusicModule extends Module {
         // table += this.buildTableRow('Energy', spotifyData.energy * 100, '%');
         // table += this.buildTableRow('Instrumentalness', spotifyData.instrumentalness * 100, '%');
         // table += '\n';
-        table += this.buildTableRow('Tempo', spotifyData.tempo, 'BPM');
-        table += this.buildTableRow('Loudness', spotifyData.loudness, 'dB');
-        table += this.buildTableRow('Popularity', spotifyData.popularity, '%');
+        spotifyData.tempo ? table += this.buildTableRow('Tempo', spotifyData.tempo, 'BPM') : undefined;
+        spotifyData.loudness ? table += this.buildTableRow('Loudness', spotifyData.loudness, 'dB') : undefined;
+        spotifyData.popularity ? table += this.buildTableRow('Popularity', spotifyData.popularity, '%') : undefined;
 
         table += '```';
 

@@ -30,6 +30,7 @@ export default class TidalProcessor extends Processor<TidalSongData> {
                 artist: item.resource.artists[0].name,
                 duration: item.resource.duration,
                 url: `https://tidal.com/browse/track/${item.id}`,
+                id: item.id,
 
                 albumImageUrl: item.resource.album.imageCover[0]?.url,
                 artistImageUrl: item.resource.artists[0].picture[0]?.url,
@@ -52,6 +53,7 @@ export default class TidalProcessor extends Processor<TidalSongData> {
             artist: item.resource.artists[0]?.name,
             duration: item.resource.duration,
             url: `https://tidal.com/browse/track/${item.id}`,
+            id: item.id,
 
             albumImageUrl: item.resource.album.imageCover[0]?.url,
             artistImageUrl: item.resource.artists[0].picture[0]?.url,

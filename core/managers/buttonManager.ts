@@ -3,56 +3,83 @@ import { ButtonInteraction, Client, Collection, Colors, EmbedBuilder } from "dis
 
 interface Button {
   data: {
-    customId: string;
+    isRegex: boolean;
+    customId: string | RegExp;
   };
   execute: (Interaction: ButtonInteraction) => Promise<void>;
 }
 
 export default class ButtonManager {
   public client: Client;
-  public buttons: Collection<string, Button> = new Collection();
+  public patterns: Button[] = [];
 
   constructor(client: Client) {
     this.client = client;
 
     this.client.on("interactionCreate", async (interaction) => {
-      if (!interaction.isButton()) return; 
-      if (interaction.replied) return; 
+      if (!interaction.isButton()) return;
+      if (interaction.replied) return;
 
-      const command = this.buttons.get(interaction.customId);
+      this.handleButton(interaction);
 
-      if (!command) {
-        interaction.reply({
-          ephemeral: true,
-          embeds: [
-            new EmbedBuilder()
-              .setTitle("Error")
-              .setDescription(`This button has expired.`)
-              .setColor(Colors.Red)
-              .setFooter({ text: `buttonId: ${interaction.customId}` }),
-          ],
-        });
-        return;
-      }
-      command.execute(interaction);
     });
   }
 
-  public registerButton(id: string, callback: (interaction: ButtonInteraction) => Promise<any>) {
-    const buttonCommand: Button = {
-      data: {
-        customId: id,
-      },
+  public handleButton(interaction: ButtonInteraction) {
+    const button = this.patterns.find((button) => {
+      if (button.data.isRegex) {
+        return (button.data.customId as RegExp).test(interaction.customId);
+      } else {
+        return button.data.customId === interaction.customId;
+      }
+    });
 
-      execute: async (interaction: ButtonInteraction) => {
-        callback(interaction);
-      },
-    };
+    if (!button) return interaction.reply({
+      ephemeral: true,
+      embeds: [
+        new EmbedBuilder()
+          .setTitle("Error")
+          .setDescription(`This button has expired.`)
+          .setColor(Colors.Red)
+          .setFooter({ text: `buttonId: ${interaction.customId}` }),
+      ],
+    });
 
-    this.buttons.set(id, buttonCommand);
+    button.execute(interaction);
   }
 
-  public unregisterButton(id: string) {
-    this.buttons.delete(id);
+  public registerButton(pattern: RegExp | string, callback: (interaction: ButtonInteraction, fields: Record<string, string>) => Promise<any>) {
+    if (typeof pattern === "string") {
+
+      const buttonCommand: Button = {
+        data: {
+          isRegex: false,
+          customId: pattern,
+        },
+
+        execute: async (interaction: ButtonInteraction) => {
+          callback(interaction, {});
+        },
+      };
+
+      this.patterns.push(buttonCommand);
+
+    } else {
+      const buttonCommand: Button = {
+        data: {
+          isRegex: true,
+          customId: pattern,
+        },
+
+        execute: async (interaction: ButtonInteraction) => {
+          const fields = pattern.exec(interaction.customId);
+          if (!fields) return;
+          callback(interaction, fields.groups as Record<string, string>);
+        },
+      };
+
+      this.patterns.push(buttonCommand);
+    }
+
   }
 }

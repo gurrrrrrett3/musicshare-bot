@@ -1,6 +1,7 @@
 import ytsr from "ytsr";
 import Processor from "../classes/processor.js";
 import Song, { SongData } from "../classes/song.js";
+import ytdl from "ytdl-core";
 
 export type YoutubeSongData = SongData<
     'artistImageUrl'
@@ -31,7 +32,18 @@ export default class YoutubeProcessor extends Processor<YoutubeSongData> {
     }
 
     public override async getUrlInfo(url: string): Promise<YoutubeSongData> {
-        return this.search(url).then((songs) => songs[0]);
+        const res = await ytdl.getInfo(url)
+
+        return {
+            name: res.videoDetails.title,
+            artist: res.videoDetails.author.name,
+            duration: parseInt(res.videoDetails.lengthSeconds),
+            url: res.videoDetails.video_url,
+            id: res.videoDetails.videoId,
+
+            artistImageUrl: res.videoDetails.author.thumbnails![0].url,
+            albumImageUrl: res.videoDetails.thumbnails[0].url
+        }
     }
 
     public override shouldProcess(url: string): boolean {
