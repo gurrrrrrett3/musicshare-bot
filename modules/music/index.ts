@@ -46,7 +46,7 @@ export default class MusicModule extends Module {
         let processor = this.processors.find((processor) => processor.shouldProcess(url)) as Processor<RequiredSongData>;
         if (!processor) return;
 
-        if (mode == "message" && processor.name === 'Youtube') return;
+        if (mode == "message" && processor.name === 'Youtube' && !(message as Message).content.startsWith('-')) return;
 
         let song = await processor.getUrlInfo(url).catch((err) => {
             processor.error(err.message);
@@ -204,16 +204,15 @@ export default class MusicModule extends Module {
         return chalk.red;
     }
 
-    public buildTableRow(title: string, value: number, endValue: string, length: number = 20) {
+    public buildTableRow(title: string, value: number, endValue: string, length: number = 17) {
         let tableRow = '\n';
 
         const numberColor = this.getColorFunction(value);
 
         tableRow += chalk.reset(
             chalk.greenBright(title.padEnd(length, ' ')),
-            numberColor(value.toFixed(1).padEnd(5, ' ')),
-            chalk.grey(endValue),
-
+            numberColor(value.toFixed(1).padStart(5, ' ')),
+            chalk.grey(endValue)
         )
 
         return tableRow;
