@@ -9,6 +9,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteracti
 import { SpotifySongData } from "./processors/spotifyProcessor.js";
 import YoutubeProcessor, { YoutubeSongData } from "./processors/youtubeProcessor.js";
 import chalk from "chalk";
+import { ansi } from "./util/ansi.js";
 
 export default class MusicModule extends Module {
     name = "music";
@@ -201,9 +202,9 @@ export default class MusicModule extends Module {
     }
 
     public getColorFunction(number: number) {
-        if (number < 33) return chalk.blue;
-        if (number < 66) return chalk.white;
-        return chalk.red;
+        if (number < 33) return ansi("reset..red")
+        if (number < 66) return ansi("reset..yellow")
+        return ansi("reset..green")
     }
 
     public buildTableRow(title: string, value: number, endValue: string, length: number = 12) {
@@ -211,12 +212,7 @@ export default class MusicModule extends Module {
 
         const numberColor = this.getColorFunction(value);
 
-        tableRow += chalk.reset(
-            chalk.greenBright(title.padEnd(length, ' ')),
-            numberColor(value.toFixed(1).padStart(5, ' ')),
-            chalk.grey(endValue)
-        )
-
+        tableRow += `${ansi("bold..white")}${title.padEnd(length, ' ')}\n${numberColor}${value.toFixed(1)}${ansi("..gray")} ${endValue}`
         return tableRow;
     }
 
@@ -224,7 +220,7 @@ export default class MusicModule extends Module {
         let table = '```ansi\n'
 
         // table += chalk.white.bold('Features') + '\n';
-        table += "-".repeat(20) + '\n';
+        // table += "-".repeat(20) + '\n';
 
         // table += this.buildTableRow('Acousticness', spotifyData.acousticness * 100, '%');
         // table += this.buildTableRow('Danceability', spotifyData.danceability * 100, '%');
