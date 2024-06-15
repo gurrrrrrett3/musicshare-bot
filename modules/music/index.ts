@@ -222,7 +222,7 @@ export default class MusicModule extends Module {
         let table = '```ansi\n'
 
         table += chalk.white.bold('Features') + '\n';
-        table += "-".repeat(23) + '\n';
+        table += "-".repeat(28) + '\n';
 
         table += this.buildTableRow('Acousticness', spotifyData.acousticness * 100, '%');
         table += this.buildTableRow('Danceability', spotifyData.danceability * 100, '%');
