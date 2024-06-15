@@ -223,7 +223,7 @@ export default class MusicModule extends Module {
     public buildAnsiDescriptionTable(spotifyData: SpotifySongData) {
         let table = '```ansi\n'
 
-        table += chalk.white.bold('Features') + '\n';
+        // table += chalk.white.bold('Features') + '\n';
 
         // table += this.buildTableRow('Acousticness', spotifyData.acousticness * 100, '%');
         // table += this.buildTableRow('Danceability', spotifyData.danceability * 100, '%');
