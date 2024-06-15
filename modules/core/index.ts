@@ -24,7 +24,7 @@ export default class CoreModule extends Module {
     public async updateStatus(): Promise<void> {
 
         const guildCount = bot.client.guilds.cache.size;
-        const userCount = bot.client.users.cache.size;
+        const userCount = bot.client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
 
         bot.client.user!.setActivity({
             type: ActivityType.Watching,
