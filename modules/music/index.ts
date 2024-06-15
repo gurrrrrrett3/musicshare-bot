@@ -204,7 +204,7 @@ export default class MusicModule extends Module {
         return chalk.red;
     }
 
-    public buildTableRow(title: string, value: number, endValue: string, length: number = 17) {
+    public buildTableRow(title: string, value: number, endValue: string, length: number = 10) {
         let tableRow = '\n';
 
         const numberColor = this.getColorFunction(value);
@@ -224,11 +224,11 @@ export default class MusicModule extends Module {
         table += chalk.white.bold('Features') + '\n';
         table += "-".repeat(28) + '\n';
 
-        table += this.buildTableRow('Acousticness', spotifyData.acousticness * 100, '%');
-        table += this.buildTableRow('Danceability', spotifyData.danceability * 100, '%');
-        table += this.buildTableRow('Energy', spotifyData.energy * 100, '%');
-        table += this.buildTableRow('Instrumentalness', spotifyData.instrumentalness * 100, '%');
-        table += '\n';
+        // table += this.buildTableRow('Acousticness', spotifyData.acousticness * 100, '%');
+        // table += this.buildTableRow('Danceability', spotifyData.danceability * 100, '%');
+        // table += this.buildTableRow('Energy', spotifyData.energy * 100, '%');
+        // table += this.buildTableRow('Instrumentalness', spotifyData.instrumentalness * 100, '%');
+        // table += '\n';
         table += this.buildTableRow('Tempo', spotifyData.tempo, 'BPM');
         table += this.buildTableRow('Loudness', spotifyData.loudness, 'dB');
         table += this.buildTableRow('Popularity', spotifyData.popularity, '%');

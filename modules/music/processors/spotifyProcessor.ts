@@ -1,25 +1,25 @@
-import { AudioFeatures, Client, Track, TrackManager } from "spotify-api.js";
+import { Album, AudioFeatures, Client, Track, TrackManager } from "spotify-api.js";
 import Processor from "../classes/processor.js";
 import Song, { SongData } from "../classes/song.js";
 
 export type SpotifySongData = SongData<
-'album'
-| 'albumImageUrl' 
-| 'acousticness' 
-| 'danceability' 
-| 'duration_ms' 
-| 'energy' 
-| 'generes'
-| 'instrumentalness' 
-| 'key' 
-| 'liveness' 
-| 'loudness' 
-| 'mode' 
-| 'popularity' 
-| 'speechiness' 
-| 'tempo' 
-| 'time_signature' 
-| 'valence'>;
+    'album'
+    | 'albumImageUrl'
+    | 'acousticness'
+    | 'danceability'
+    | 'duration_ms'
+    | 'energy'
+    | 'generes'
+    | 'instrumentalness'
+    | 'key'
+    | 'liveness'
+    | 'loudness'
+    | 'mode'
+    | 'popularity'
+    | 'speechiness'
+    | 'tempo'
+    | 'time_signature'
+    | 'valence'>;
 
 export default class SpotifyProcessor extends Processor<SpotifySongData> {
 
@@ -59,7 +59,9 @@ export default class SpotifyProcessor extends Processor<SpotifySongData> {
 
         if (!track || !audioFeatures) throw new Error('Invalid spotify url');
 
-        return this.buildSongData(track, audioFeatures);
+        const album = track.album ? await this.client.albums.get(track.album.id) || undefined : undefined;
+
+        return this.buildSongData(track, audioFeatures, album);
     }
 
     public override shouldProcess(url: string): boolean {
@@ -87,7 +89,7 @@ export default class SpotifyProcessor extends Processor<SpotifySongData> {
         return url.match(/^(https?:\/\/)?(open\.)?spotify\.com\/(track|album|playlist|artist|episode|show)\/([a-zA-Z0-9]+)/) !== null;
     }
 
-    public buildSongData(track: Track, audioFeatures: AudioFeatures) {
+    public buildSongData(track: Track, audioFeatures: AudioFeatures, album?: Album) {
         return {
             name: track.name,
             artist: track.artists[0].name,
@@ -99,7 +101,7 @@ export default class SpotifyProcessor extends Processor<SpotifySongData> {
             danceability: audioFeatures.danceability,
             duration_ms: audioFeatures.duration_ms,
             energy: audioFeatures.energy,
-            generes: track.album?.genres || [],
+            generes: album?.genres || [],
             instrumentalness: audioFeatures.instrumentalness,
             key: audioFeatures.key,
             liveness: audioFeatures.liveness,
