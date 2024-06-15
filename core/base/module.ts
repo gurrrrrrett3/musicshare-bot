@@ -52,7 +52,7 @@ export default class Module implements BaseModuleType {
     for (const commandFile of commandFolder) {
       if (!commandFile.endsWith(".js")) continue;
       try {
-        const command = require(path.resolve(this.location, `${this.name}/commands/${commandFile}`))
+        const command = (await import(path.resolve(this.location, `${this.name}/commands/${commandFile}`)))
           .default as CustomCommandBuilder;
         command.setModule(this.name);
         commands.push(command);
@@ -60,6 +60,7 @@ export default class Module implements BaseModuleType {
         this.commands.set(command.getName(), command);
       } catch (e) {
         Logger.error("CommandLoader", `Error loading command ${commandFile} in module ${this.name}`);
+        console.error(e);
       }
     }
 
@@ -82,9 +83,9 @@ export default class Module implements BaseModuleType {
     for (const interactionFile of interactionFolder) {
       if (!interactionFile.endsWith(".js")) continue;
       try {
-        const interaction = require(path.resolve(
+        const interaction = (await import(path.resolve(
           this.location, `${this.name}/interactions/${interactionFile}`
-        )).default as InteractionHandler;
+        ))).default as InteractionHandler;
         interaction.module = this.name;
         interactions.push(interaction);
 
