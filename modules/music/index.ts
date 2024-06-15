@@ -164,7 +164,7 @@ export default class MusicModule extends Module {
 
         bot.buttonManager.registerButton(`${message.id}-remove`, async (interaction) => {
             if (mode === 'message') {
-                await (message as Message).delete();
+                await (await msg).delete();
             } else {
                 await (message as ChatInputCommandInteraction).deleteReply();
             }
