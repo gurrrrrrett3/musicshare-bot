@@ -3,8 +3,8 @@ import Processor from "../classes/processor.js";
 import Song, { SongData } from "../classes/song.js";
 
 export type YoutubeSongData = SongData<
-'artistImageUrl'
-| 'albumImageUrl'
+    'artistImageUrl'
+    | 'albumImageUrl'
 >;
 
 export default class YoutubeProcessor extends Processor<YoutubeSongData> {
@@ -20,12 +20,13 @@ export default class YoutubeProcessor extends Processor<YoutubeSongData> {
         return videos.map((video) => ({
             name: video.title,
             artist: video.author!.name,
-            duration: parseInt(video.duration || '0') ,
+            duration: parseInt(video.duration || '0'),
             url: video.url,
-            
+            id: video.id,
+
             artistImageUrl: video.author!.bestAvatar?.url || undefined,
             albumImageUrl: video.bestThumbnail.url || undefined
-            
+
         }));
     }
 

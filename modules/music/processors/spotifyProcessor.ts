@@ -97,6 +97,7 @@ export default class SpotifyProcessor extends Processor<SpotifySongData> {
             albumImageUrl: track.album?.images[0]?.url || undefined,
             duration: track.duration,
             url: track.externalURL.spotify,
+            id: track.id,
             acousticness: audioFeatures.acousticness,
             danceability: audioFeatures.danceability,
             duration_ms: audioFeatures.duration_ms,

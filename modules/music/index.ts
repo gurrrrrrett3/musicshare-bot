@@ -133,7 +133,11 @@ export default class MusicModule extends Module {
             } else if (!song.url) {
                 description += `**${processor}**: No results found\n`;
             } else {
-                description += `[${processor}](${song.url})\n`
+                if (processor === 'Youtube') {
+                    description += `[${processor}](${song.url}) ([YouTube Music](https://music.youtube.com/watch?v=${song.id}))\n`
+                } else {
+                    description += `[${processor}](${song.url})\n`
+                }
             }
         }
 

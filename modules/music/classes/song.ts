@@ -1,22 +1,23 @@
 export default interface Song {
-    
-    // basic info    
-    name: string;
-    artist: string;
-    album: string;
-    duration: number;
-    url: string;
 
-    //shared 
-    albumImageUrl?: string;
-    artistImageUrl?: string;
-    generes?: string[];
+	// basic info    
+	name: string;
+	artist: string;
+	album: string;
+	duration: number;
+	url: string;
+	id: string;
 
-    // youtube
+	//shared 
+	albumImageUrl?: string;
+	artistImageUrl?: string;
+	generes?: string[];
 
-    // spotify
+	// youtube
 
-    /** A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic. */
+	// spotify
+
+	/** A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic. */
 	acousticness: number;
 	/** Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable. */
 	danceability: number;
@@ -48,5 +49,5 @@ export default interface Song {
 }
 
 export type SongData<Selection extends keyof Omit<Song, RequiredSongKeys>> = Pick<Song, Selection | RequiredSongKeys>;
-export type RequiredSongKeys = 'name' | 'artist' | 'duration' | 'url';
+export type RequiredSongKeys = 'name' | 'artist' | 'duration' | 'url' | 'id';
 export type RequiredSongData = SongData<never>;

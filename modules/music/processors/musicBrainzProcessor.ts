@@ -33,6 +33,7 @@ export default class MusicBrainzProcessor extends Processor<MusicBrainzSongData>
             artist: release["artist-credit"]?.[0].name || '',
             duration: release.media?.[0].tracks?.reduce((acc, track) => acc + track.length, 0) || 0,
             url: `${this.baseUrl}/release/${release.id}`,
+            id: release.id
         }));
 
     }
@@ -54,6 +55,7 @@ export default class MusicBrainzProcessor extends Processor<MusicBrainzSongData>
                     artist: res["artist-credit"]?.[0].artist.name || '',
                     duration: res.media?.[0].tracks?.reduce((acc, track) => acc + track.length, 0) || 0,
                     url: `${this.baseUrl}/release/${res.id}`,
+                    id: res.id
                 };
             case 'work':
                 return {
@@ -61,6 +63,7 @@ export default class MusicBrainzProcessor extends Processor<MusicBrainzSongData>
                     artist: res["artist-credit"]?.[0].name || '',
                     duration: 0,
                     url: `${this.baseUrl}/work/${res.id}`,
+                    id: res.id
                 };
             case 'recording':
                 return {
@@ -68,6 +71,7 @@ export default class MusicBrainzProcessor extends Processor<MusicBrainzSongData>
                     artist: res["artist-credit"]?.[0].name || '',
                     duration: res.length || 0,
                     url: `${this.baseUrl}/recording/${res.id}`,
+                    id: res.id
                 };
             case 'label':
                 return {
@@ -75,6 +79,7 @@ export default class MusicBrainzProcessor extends Processor<MusicBrainzSongData>
                     artist: '',
                     duration: 0,
                     url: `${this.baseUrl}/label/${res.id}`,
+                    id: res.id
                 };
             default:
                 throw new Error('Invalid musicbrainz url');
