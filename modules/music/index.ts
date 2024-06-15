@@ -206,7 +206,7 @@ export default class MusicModule extends Module {
         return chalk.red;
     }
 
-    public buildTableRow(title: string, value: number, endValue: string, length: number = 10) {
+    public buildTableRow(title: string, value: number, endValue: string, length: number = 12) {
         let tableRow = '\n';
 
         const numberColor = this.getColorFunction(value);
@@ -224,7 +224,6 @@ export default class MusicModule extends Module {
         let table = '```ansi\n'
 
         table += chalk.white.bold('Features') + '\n';
-        table += "-".repeat(28) + '\n';
 
         // table += this.buildTableRow('Acousticness', spotifyData.acousticness * 100, '%');
         // table += this.buildTableRow('Danceability', spotifyData.danceability * 100, '%');
