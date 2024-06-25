@@ -41,6 +41,8 @@ export default class MusicModule extends Module {
         return true;
     }
 
+
+
     public async lookupSong(mode: "message", url: string, message: Message): Promise<void>;
     public async lookupSong(mode: "interaction", url: string, interaction: ChatInputCommandInteraction): Promise<void>;
     public async lookupSong(mode: string, url: string, message: Message | ChatInputCommandInteraction): Promise<void> {

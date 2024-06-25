@@ -19,8 +19,8 @@ module.exports = {
 	SHOW_COMMAND_DEPLOYMENT_INFO: true,
 
 	// Command mode (GLOBAL or GUILD)
-	COMMAND_MODE: "GLOBAL",
+	COMMAND_MODE: "GUILD",
 
 	// Guild ID to use for command mode (if COMMAND_MODE is GUILD)
-	GUILD_ID: "123456789012345678",
+	GUILD_ID: "1022399550729748500",
 };

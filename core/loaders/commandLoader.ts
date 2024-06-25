@@ -91,7 +91,7 @@ export default class CommandLoader {
           body: commandsToDeploy,
         })
         .then(() => {
-         process.env.SHOW_COMMAND_DEPLOYMENT_INFO == "true" ? Logger.log("CommandLoader", `${this.commands.size} command${this.commands.size == 1 ? "" : "s"} deployed`) : null;
+          process.env.SHOW_COMMAND_DEPLOYMENT_INFO == "true" ? Logger.log("CommandLoader", `${this.commands.size} command${this.commands.size == 1 ? "" : "s"} deployed`) : null;
         })
         .catch((err) => {
           Logger.error("CommandLoader", err);
@@ -141,7 +141,7 @@ export default class CommandLoader {
   }
 
   public showLoadedCommandCount() {
-    if (process.env.SHOW_COMMAND_COUNT == "false") return;    
+    if (process.env.SHOW_COMMAND_COUNT == "false") return;
     const commands = Array.from(this.commands.values());
 
     const slashCommandCount = commands.filter((command) => command.getType() == "COMMAND").length;
