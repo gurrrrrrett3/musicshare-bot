@@ -1,4 +1,4 @@
-import { bot } from "../../core/index.js";
+import { bot, db } from "../../core/index.js";
 import Module from "../../core/base/module.js";
 import fs from "fs";
 import path from "path";
@@ -11,6 +11,7 @@ import YoutubeProcessor, { YoutubeSongData } from "./processors/youtubeProcessor
 import chalk from "chalk";
 import { ansi } from "./util/ansi.js";
 import Utils from "../../core/utils/utils.js";
+import ChannelSettings from "./entities/channelSettings.entity.js";
 
 export default class MusicModule extends Module {
     name = "music";
@@ -48,7 +49,16 @@ export default class MusicModule extends Module {
         let processor = this.processors.find((processor) => processor.shouldProcess(url)) as Processor<RequiredSongData>;
         if (!processor) return;
 
-        if (mode == "message" && processor.name === 'Youtube' && !(message as Message).content.startsWith('-')) return;
+        const channelSettingsRepository = db.getEntityManager().getRepository(ChannelSettings);
+        const channelSettings = await channelSettingsRepository.findOne({ channelId: message.channelId });
+
+        const shouldProcessYoutube = channelSettings?.autoYoutube || (message as Message).content.startsWith('-')
+
+        if (
+            mode == "message" &&
+            processor.name === 'Youtube' &&
+            !shouldProcessYoutube
+        ) return;
 
         let song = await processor.getUrlInfo(url).catch((err) => {
             processor.error(err.message);
