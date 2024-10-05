@@ -16,9 +16,9 @@ export default class CustomSlashCommandSubcommandGroupBuilder {
   private _builder = new SlashCommandSubcommandGroupBuilder();
   private _customOptions: CustomSlashCommandSubcommandBuilder[] = [];
 
-  constructor() {}
+  constructor() { }
 
-  toJSON = this._builder.toJSON.bind(this._builder);
+  toJSON = this._builder.toJSON.bind(this._builder) as () => ReturnType<SlashCommandSubcommandGroupBuilder["toJSON"]>;
 
   setEnabled(enabled: boolean): this {
     this.enabled = enabled;

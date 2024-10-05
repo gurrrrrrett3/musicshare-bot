@@ -2,6 +2,7 @@ import {
   ApplicationCommandType,
   ContextMenuCommandBuilder,
   ContextMenuCommandInteraction,
+  ContextMenuCommandType,
   LocaleString,
   LocalizationMap,
 } from "discord.js";
@@ -9,13 +10,13 @@ import CommandBuilder from "./customSlashCommandBuilder.js";
 
 export default class CustomMessageContextMenuCommandBuilder {
   protected enabled: boolean = true;
-  private _builder = new ContextMenuCommandBuilder().setType(ApplicationCommandType.Message);
+  private _builder = new ContextMenuCommandBuilder().setType(3)
   private _module = "";
   execute: (interaction: ContextMenuCommandInteraction) => Promise<void> = async () => Promise.resolve();
 
-  constructor() {}
+  constructor() { }
 
-  toJSON = this._builder.toJSON.bind(this._builder);
+  toJSON = this._builder.toJSON.bind(this._builder) as () => ReturnType<ContextMenuCommandBuilder["toJSON"]>;
 
   setEnabled(enabled: boolean): this {
     this.enabled = enabled;

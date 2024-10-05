@@ -33,9 +33,9 @@ export default class CommandBuilder {
   )[] = [];
   execute: (interaction: ChatInputCommandInteraction) => Promise<any> = async () => Promise.resolve();
 
-  constructor() {}
+  constructor() { }
 
-  toJSON = this._builder.toJSON.bind(this._builder);
+  toJSON = this._builder.toJSON.bind(this._builder) as () => ReturnType<SlashCommandBuilder["toJSON"]>;
 
   setEnabled(enabled: boolean): this {
     this.enabled = enabled;
@@ -299,7 +299,7 @@ export default class CommandBuilder {
         }
       }
     } catch (e) {
-      Logger.error(this.getName() ,e);
+      Logger.error(this.getName(), e);
     }
   }
 }

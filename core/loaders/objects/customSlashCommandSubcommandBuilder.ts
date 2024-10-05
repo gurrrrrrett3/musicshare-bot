@@ -27,9 +27,9 @@ export default class CustomSlashCommandSubcommandBuilder {
   )[] = [];
   execute: (interaction: ChatInputCommandInteraction) => Promise<void> = async () => Promise.resolve();
 
-  constructor() {}
+  constructor() { }
 
-  toJSON = this._builder.toJSON.bind(this._builder);
+  toJSON = this._builder.toJSON.bind(this._builder) as () => ReturnType<SlashCommandSubcommandBuilder["toJSON"]>;
 
   setEnabled(enabled: boolean): this {
     this.enabled = enabled;

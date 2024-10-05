@@ -75,6 +75,7 @@ export default class MusicModule extends Module {
             .setColor(Colors.Yellow)
             .setDescription('Loading song information...')
 
+        // @ts-ignore | cannot be a partial
         const msg = mode === 'message' ? (message as Message).channel.send({
             embeds: [loadingEmbed]
         }) : (message as ChatInputCommandInteraction).reply({
