@@ -1,4 +1,4 @@
-import ytsr from "ytsr";
+import ytsr from "@distube/ytsr";
 import Processor from "../classes/processor.js";
 import Song, { SongData } from "../classes/song.js";
 import ytdl from "ytdl-core";
@@ -19,14 +19,14 @@ export default class YoutubeProcessor extends Processor<YoutubeSongData> {
         if (searchResults.items.length === 0) return [];
         let videos = searchResults.items.filter((item) => item.type === "video") as ytsr.Video[];
         return videos.map((video) => ({
-            name: video.title,
+            name: video.name,
             artist: video.author!.name,
             duration: parseInt(video.duration || '0'),
             url: video.url,
             id: video.id,
 
             artistImageUrl: video.author!.bestAvatar?.url || undefined,
-            albumImageUrl: video.bestThumbnail.url || undefined
+            albumImageUrl: video.thumbnail || undefined
 
         }));
     }
